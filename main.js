@@ -141,13 +141,13 @@ if (canvas) {
       ctx.stroke();
 
       ctx.fillStyle = "#a3e37a";
-      ctx.font = "600 132px 'Space Grotesk', sans-serif";
+      ctx.font = "500 132px 'Roboto', sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText("MFU", W / 2, pad + photoH / 2 - 6);
 
       ctx.fillStyle = "#7d857f";
-      ctx.font = "400 20px 'IBM Plex Mono', monospace";
+      ctx.font = "400 20px 'Roboto Mono', monospace";
       ctx.fillText("FOTO PROFIL", W / 2, pad + photoH / 2 + 96);
     }
 
@@ -158,16 +158,16 @@ if (canvas) {
     ctx.fillRect(pad, 552, 54, 4);
 
     ctx.fillStyle = "#f2f4f1";
-    ctx.font = "600 48px 'Space Grotesk', sans-serif";
+    ctx.font = "500 48px 'Roboto', sans-serif";
     ctx.fillText("Muhammad", pad, 626);
     ctx.fillText("Fakhruddin Usman", pad, 682);
 
     ctx.fillStyle = "#a3e37a";
-    ctx.font = "500 22px 'IBM Plex Mono', monospace";
+    ctx.font = "500 22px 'Roboto Mono', monospace";
     ctx.fillText("MOBILE DEVELOPER", pad, 742);
 
     ctx.fillStyle = "#8b9490";
-    ctx.font = "400 20px 'IBM Plex Mono', monospace";
+    ctx.font = "400 20px 'Roboto Mono', monospace";
     ctx.fillText("MALANG, ID", pad, 796);
     ctx.fillText("FLUTTER / KOTLIN / SWIFT", pad, 828);
 
@@ -177,9 +177,17 @@ if (canvas) {
   drawFace(null);
 
   const photo = new Image();
-  photo.onload = () => drawFace(photo);
+  let loadedPhoto = null;
+  photo.onload = () => {
+    loadedPhoto = photo;
+    drawFace(photo);
+  };
   photo.onerror = () => {};
   photo.src = PHOTO_URL;
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => drawFace(loadedPhoto));
+  }
 
   /* clip + straps */
 
